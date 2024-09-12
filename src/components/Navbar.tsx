@@ -19,6 +19,9 @@ const Navbar = () => {
         <li className="hover:text-yellow-500">
           <Link to="/login">LoginForm</Link>
         </li>
+        <li className="hover:text-yellow-500">
+          <Link to="/dictionary">Dictionary</Link>
+        </li>
         {form.formData.username && (
           <div className="ml-auto">
             <p>
