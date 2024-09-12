@@ -1,9 +1,8 @@
-import { SET_MODULE_NAME } from "./defaultTypes";
+import { SET_NAME_MODULE } from "./defaultTypes";
 
-export const updateModuleName = (moduleName: string) => {
+export const setNameModule = (nameModule: string) => {
   return {
-    type: SET_MODULE_NAME,
-    payload: moduleName,
+    type: SET_NAME_MODULE,
+    payload: nameModule,
   };
 };
-

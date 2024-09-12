@@ -1,76 +1,76 @@
-import useCustomForm from "../../hooks/useForm";
+import useForm from "../../hooks/useForm";
 import { useDispatch } from "react-redux";
-import { storeFormDetails } from "../../redux/form/formActions";
+import { saveFormData } from "../../redux/form/formActions";
 import { motion } from "framer-motion";
 import { ModalInfo } from "../../components/ModalInfo";
 import { useRef, useState } from "react";
-import { useAppSelector } from "../../redux/reducers";
+import { useTypedSelector } from "../../redux/reducers";
 
 const LoginForm = () => {
-  const [formValues, handleInputChange, resetFormValues] = useCustomForm({
+  const [values, handleChange, resetForm] = useForm({
     username: "",
     email: "",
     password: "",
   });
-  const [feedbackMessage, setFeedbackMessage] = useState("");
-  const formState = useAppSelector((appState) => appState.form);
+  const [message, setMessage] = useState("");
+  const form = useTypedSelector((state) => state.form);
   const dispatch = useDispatch();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
-  const inputFieldRef = useRef<HTMLInputElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalLogout, setModalLogout] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [formStatus, setFormStatus] = useState<"success" | "error" | "info">(
+  const [formStatus, setformStatus] = useState<"success" | "error" | "info">(
     "error"
   );
-  const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (formValues.email === "" || formValues.password === "") {
+    if (values.email === "" || values.password === "") {
       return;
     }
-    setModalOpen(true);
+    setIsOpen(true);
 
-    if (formValues.password === formState.password) {
+    if (values.password === form.password) {
       dispatch(
-        storeFormDetails({
-          username: formValues.username,
-          email: formValues.email,
+        saveFormData({
+          username: values.username,
+          email: values.email,
         })
       );
-      setFeedbackMessage("Login Successful");
-      setFormStatus("success");
+      setMessage("Login Successful");
+      setformStatus("success");
     } else {
-      setFeedbackMessage("Login Failed");
-      setFormStatus("error");
+      setMessage("Login Failed");
+      setformStatus("error");
     }
   };
 
   return (
     <div className="flex items-center justify-center">
       <ModalInfo
-        isVisible={isModalOpen}
-        message={feedbackMessage}
+        isVisible={isOpen}
+        message={message}
         onClose={() => {
-          setModalOpen(false);
+          setIsOpen(false);
         }}
         status={formStatus}
       />
       <ModalInfo
-        isVisible={isLogoutModalOpen}
+        isVisible={modalLogout}
         message={"¿Estas seguro de querer cerrar sesion?"}
         onClose={() => {
-          setLogoutModalOpen(false);
+          setModalLogout(false);
         }}
         status={"info"}
       >
         <div className="flex justify-end p-4">
           <button
             onClick={() => {
-              setLogoutModalOpen(false);
-              dispatch(storeFormDetails({ username: "", email: "" }));
-              resetFormValues();
-              inputFieldRef.current?.focus();
+              setModalLogout(false);
+              dispatch(saveFormData({ username: "", email: "" }));
+              resetForm();
+              inputRef.current?.focus();
             }}
             className="bg-gray-500 text-white font-bold py-1 px-2 rounded"
           >
@@ -84,28 +84,28 @@ const LoginForm = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="border-2 p-10 rounded-md mt-16 w-[500px]">
-          <form onSubmit={handleSubmitForm} className="space-y-2">
-            {formState.formData.username && (
+          <form onSubmit={handleSubmit} className="space-y-2">
+            {form.formData.username && (
               <>
                 <h5 className="text-center font-bold">
-                  USERNAME: {formState.formData.username}
+                  USERNAME: {form.formData.username}
                 </h5>
                 <h5 className="text-center font-bold">
-                  EMAIL: {formState.formData.email}
+                  EMAIL: {form.formData.email}
                 </h5>
               </>
             )}
             <div className="flex flex-col">
               <label htmlFor="username">Username:</label>
               <input
-                ref={inputFieldRef}
+                ref={inputRef}
                 className="border border-gray-500 rounded-md px-1.5 py-2"
                 type="text"
                 id="username"
                 name="username"
                 autoFocus
-                value={formValues.username}
-                onChange={handleInputChange}
+                value={values.username}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
@@ -115,8 +115,8 @@ const LoginForm = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={formValues.email}
-                onChange={handleInputChange}
+                value={values.email}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
@@ -124,18 +124,18 @@ const LoginForm = () => {
               <div className="flex">
                 <input
                   className="border border-gray-500 rounded-md px-1.5 py-2 w-full"
-                  type={isPasswordVisible ? "text" : "password"}
+                  type={passwordVisible ? "text" : "password"}
                   id="password"
                   name="password"
-                  value={formValues.password}
-                  onChange={handleInputChange}
+                  value={values.password}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
-                  onClick={() => setPasswordVisible(!isPasswordVisible)}
+                  onClick={() => setPasswordVisible(!passwordVisible)}
                   className="ml-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
                 >
-                  {isPasswordVisible ? "Hide" : "Show"}
+                  {passwordVisible ? "Hide" : "Show"}
                 </button>
               </div>
             </div>
@@ -146,12 +146,12 @@ const LoginForm = () => {
               >
                 Submit
               </button>
-              {formState.formData.username && (
+              {form.formData.username && (
                 <button
                   type="button"
                   className="bg-red-500 text-white p-2 rounded w-full hover:bg-red-700"
                   onClick={() => {
-                    setLogoutModalOpen(true);
+                    setModalLogout(true);
                   }}
                 >
                   Logout

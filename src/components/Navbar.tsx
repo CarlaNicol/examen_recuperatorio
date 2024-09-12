@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTypedSelector } from "../redux/reducers";
 
 const Navbar = () => {
-  const formState = useTypedSelector((appState) => appState.formState);
+  const form = useTypedSelector((state) => state.form);
 
   return (
     <nav className="bg-slate-800 p-4">
@@ -19,14 +19,14 @@ const Navbar = () => {
         <li className="hover:text-yellow-500">
           <Link to="/login">LoginForm</Link>
         </li>
-        {formState.formData.username && (
+        {form.formData.username && (
           <div className="ml-auto">
             <p>
               Bienvenido{" "}
               <span className="font-bold text-yellow-500 capitalize">
-                {formState.formData.username}
+                {form.formData.username}
               </span>
-              : {formState.formData.email}
+              : {form.formData.email}
             </p>
           </div>
         )}

@@ -1,16 +1,16 @@
-import { ProductItem } from "../../../redux/product/productTypes";
+import { Product } from "../../../redux/product/productTypes";
 
-export function ProductRow({ item }: { item: ProductItem }) {
-  const productName = item.stocked ? (
-    item.name
+export function ProductRow({ product }: { product: Product }) {
+  const name = product.stocked ? (
+    product.name
   ) : (
-    <span className="line-through text-red-500">{item.name}</span>
+    <span className="line-through text-red-500">{product.name}</span>
   );
 
   return (
     <tr className="border-b">
-      <td className="p-2 font-semibold">{productName}</td>
-      <td>{item.price}</td>
+      <td className="p-2 font-semibold">{name}</td>
+      <td>{product.price}</td>
     </tr>
   );
 }

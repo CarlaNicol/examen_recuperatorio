@@ -1,8 +1,8 @@
-import { ProductItem, UPDATE_PRODUCTS } from "./productTypes";
+import { Product, SET_PRODUCTS } from "./productTypes";
 
-export const updateProducts = (productList: ProductItem[]) => {
+export const setProducts = (products: Product[]) => {
   return {
-    type: UPDATE_PRODUCTS,
-    payload: productList,
+    type: SET_PRODUCTS,
+    payload: products,
   };
 };

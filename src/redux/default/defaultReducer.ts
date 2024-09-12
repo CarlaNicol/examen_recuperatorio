@@ -1,21 +1,21 @@
-import { SET_MODULE_NAME } from "./defaultTypes";
+import { SET_NAME_MODULE } from "./defaultTypes";
 
-const initialModuleState = {
-  moduleName: "Desarrollo Front End con React v5",
+const initialState = {
+  name: "Desarrollo Front End con React v5",
 };
 
-const moduleReducer = (
-  state = initialModuleState,
+const defaultReducer = (
+  state = initialState,
   action: {
     type: string;
     payload: string;
   }
 ) => {
   switch (action.type) {
-    case SET_MODULE_NAME: {
+    case SET_NAME_MODULE: {
       return {
         ...state,
-        moduleName: action.payload,
+        name: action.payload,
       };
     }
     default:
@@ -23,4 +23,4 @@ const moduleReducer = (
   }
 };
 
-export default moduleReducer;
+export default defaultReducer;

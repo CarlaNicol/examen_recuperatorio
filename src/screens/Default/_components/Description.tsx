@@ -1,11 +1,11 @@
-import { useAppSelector } from "../../../redux/reducers";
+import { useTypedSelector } from "../../../redux/reducers";
 
 const Description = () => {
-  const moduleState = useAppSelector((appState) => appState.module);
+  const defaultState = useTypedSelector((state) => state.default);
 
   return (
     <>
-      <h4>{moduleState.moduleName}</h4>
+      <h4>{defaultState.name}</h4>
     </>
   );
 };

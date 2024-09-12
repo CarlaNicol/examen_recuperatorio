@@ -1,46 +1,44 @@
 import { useState, useEffect } from "react";
 
 const Contador = () => {
-  const [count, setCount] = useState(0);
-
-  const increaseCount = () => {
-    setCount(count + 1);
+  const [contador, setContador] = useState(0);
+  const handleContador1 = () => {
+    setContador(contador + 1);
   };
-
-  const decreaseCount = () => {
-    setCount(count - 1);
+  const handleContador2 = () => {
+    setContador(contador - 1);
   };
 
   useEffect(() => {
-    setCount(12);
+    setContador(12);
   }, []);
 
   useEffect(() => {
-    if (count === 15) {
-      alert("El contador es 15");
+    if (contador === 15) {
+      alert("contador es 15");
     }
-  }, [count]);
+  }, [contador]);
 
   useEffect(() => {
     return () => {
-      console.log("El componente se desmontó");
+      console.log("El componenete se desmonto");
     };
   });
 
   return (
     <div className="">
       <h4>Componente Contador</h4>
-      <h5>{count}</h5>
+      <h5>{contador}</h5>
       <div className="flex gap-x-1">
         <button
           className="bg-blue-500 p-2 text-white hover:bg-blue-400"
-          onClick={increaseCount}
+          onClick={handleContador1}
         >
           Aumentar
         </button>
         <button
           className="bg-blue-500 p-2 text-white hover:bg-blue-400"
-          onClick={decreaseCount}
+          onClick={handleContador2}
         >
           Disminuir
         </button>

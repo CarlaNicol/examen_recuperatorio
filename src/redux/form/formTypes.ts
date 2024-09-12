@@ -1,2 +1,2 @@
-export const UPDATE_FORM_DATA = "UPDATE_FORM_DATA";
-export const RETRIEVE_PASSWORD = "RETRIEVE_PASSWORD";
+export const SET_FORM_DATA = "SET_FORM_DATA";
+export const GET_PASSWORD = "GET_PASSWORD";

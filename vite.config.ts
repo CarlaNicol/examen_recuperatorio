@@ -1,9 +1,9 @@
 import { defineConfig } from "vite";
-import reactPlugin from "@vitejs/plugin-react-swc";
-import { ghPagesPlugin } from "vite-plugin-gh-pages";
+import react from "@vitejs/plugin-react-swc";
+import { ghPages } from "vite-plugin-gh-pages";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactPlugin(), ghPagesPlugin()],
+  plugins: [react(), ghPages()],
   base: "/examen_recuperatorio",
 });

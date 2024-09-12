@@ -1,36 +1,36 @@
-import { ProductItem } from "../../../redux/product/productTypes";
-import { CategoryRow } from "./ProductCategoryRow";
+import { Product } from "../../../redux/product/productTypes";
+import { ProductCategoryRow } from "./ProductCategoryRow";
 import { ProductRow } from "./ProductRow";
 
 export function ProductTable({
-  productList,
-  searchText,
-  isInStockOnly,
+  products,
+  filterText,
+  inStockOnly,
 }: {
-  productList: ProductItem[];
-  searchText: string;
-  isInStockOnly: boolean;
+  products: Product[];
+  filterText: string;
+  inStockOnly: boolean;
 }) {
   const rows: JSX.Element[] = [];
   let lastCategory: string | null = null;
 
-  productList.forEach((item) => {
-    if (item.name.toLowerCase().indexOf(searchText.toLowerCase()) === -1) {
+  products.forEach((product) => {
+    if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
       return;
     }
-    if (isInStockOnly && !item.stocked) {
+    if (inStockOnly && !product.stocked) {
       return;
     }
-    if (item.category !== lastCategory) {
+    if (product.category !== lastCategory) {
       rows.push(
-        <CategoryRow
-          categoryName={item.category}
-          key={item.category}
+        <ProductCategoryRow
+          category={product.category}
+          key={product.category}
         />
       );
     }
-    rows.push(<ProductRow item={item} key={item.name} />);
-    lastCategory = item.category;
+    rows.push(<ProductRow product={product} key={product.name} />);
+    lastCategory = product.category;
   });
 
   return (

@@ -1,28 +1,28 @@
 import { useState } from "react";
-import { ProductItem } from "../../../redux/product/productTypes";
+import { Product } from "../../../redux/product/productTypes";
 import { SearchBar } from "./SearchBar";
 import { ProductTable } from "./ProductTable";
 
 export const FilterableProductTable = ({
-  productList,
+  products,
 }: {
-  productList: ProductItem[];
+  products: Product[];
 }) => {
-  const [searchText, setSearchText] = useState("");
-  const [isInStockOnly, setIsInStockOnly] = useState(false);
+  const [filterText, setFilterText] = useState("");
+  const [inStockOnly, setInStockOnly] = useState(false);
 
   return (
     <div className="flex flex-col">
       <SearchBar
-        filterText={searchText}
-        inStockOnly={isInStockOnly}
-        onFilterTextChange={setSearchText}
-        onInStockOnlyChange={setIsInStockOnly}
+        filterText={filterText}
+        inStockOnly={inStockOnly}
+        onFilterTextChange={setFilterText}
+        onInStockOnlyChange={setInStockOnly}
       />
       <ProductTable
-        products={productList}
-        filterText={searchText}
-        inStockOnly={isInStockOnly}
+        products={products}
+        filterText={filterText}
+        inStockOnly={inStockOnly}
       />
     </div>
   );

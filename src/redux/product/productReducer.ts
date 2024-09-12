@@ -1,25 +1,25 @@
-import { ProductItem, UPDATE_PRODUCTS } from "./productTypes";
+import { Product, SET_PRODUCTS } from "./productTypes";
 
-export interface IProductState {
-  productList: ProductItem[];
+export interface IProductReducer {
+  PRODUCTS: Product[];
 }
 
-const initialProductState = {
-  productList: [],
+const initialState = {
+  PRODUCTS: [],
 };
 
 const productReducer = (
-  state = initialProductState,
+  state = initialState,
   action: {
     type: string;
-    payload: ProductItem[];
+    payload: Product[];
   }
 ) => {
   switch (action.type) {
-    case UPDATE_PRODUCTS: {
+    case SET_PRODUCTS: {
       return {
         ...state,
-        productList: action.payload,
+        PRODUCTS: action.payload,
       };
     }
     default:

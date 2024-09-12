@@ -1,46 +1,46 @@
-import { UPDATE_FORM_DATA, RETRIEVE_PASSWORD } from "./formTypes";
+import { SET_FORM_DATA, GET_PASSWORD } from "./formTypes";
 
-export interface IFormDetails {
+export interface IFormData {
   username: string;
   email: string;
 }
 
-export type IPasswordString = string;
+export type IPassword = string;
 
-const initialFormState = {
-  formDetails: {
+const initialState = {
+  formData: {
     username: "",
     email: "",
   },
-  userPassword: "mod7ReactUSIP",
+  password: "mod7ReactUSIP",
 };
 
 const formReducer = (
-  state = initialFormState,
+  state = initialState,
   action:
     | {
-        type: "UPDATE_FORM_DATA";
-        payload: IFormDetails;
+        type: "SET_FORM_DATA";
+        payload: IFormData;
       }
     | {
-        type: "RETRIEVE_PASSWORD";
-        payload: IPasswordString;
+        type: "GET_PASSWORD";
+        payload: IPassword;
       }
 ) => {
   switch (action.type) {
-    case UPDATE_FORM_DATA: {
+    case SET_FORM_DATA: {
       return {
         ...state,
-        formDetails: {
-          ...state.formDetails,
+        formData: {
+          ...state.formData,
           ...action.payload,
         },
       };
     }
-    case RETRIEVE_PASSWORD: {
+    case GET_PASSWORD: {
       return {
         ...state,
-        userPassword: action.payload,
+        password: action.payload,
       };
     }
     default:

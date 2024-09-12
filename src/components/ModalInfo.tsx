@@ -1,30 +1,30 @@
 import { motion } from "framer-motion";
 import { cn } from "../libs";
 
-export const InfoModal = ({
-  visible,
-  text,
-  handleClose,
-  alertType,
-  content,
+export const ModalInfo = ({
+  isVisible,
+  message,
+  onClose,
+  status,
+  children,
 }: {
-  visible: boolean;
-  text: string;
-  handleClose: () => void;
-  alertType: "success" | "error" | "info";
-  content?: JSX.Element;
+  isVisible: boolean;
+  message: string;
+  onClose: () => void;
+  status: "success" | "error" | "info";
+  children?: JSX.Element;
 }) => {
-  if (!visible) return null;
+  if (!isVisible) return null;
 
-  return visible ? (
+  return isVisible ? (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <motion.div
         className={cn(
           "p-10 rounded-md border max-w-[500px] relative",
           `${
-            alertType === "success"
+            status === "success"
               ? "bg-green-200"
-              : alertType === "error"
+              : status === "error"
               ? "bg-red-200"
               : "bg-blue-200"
           }`
@@ -36,16 +36,16 @@ export const InfoModal = ({
         <div className="absolute top-0 right-1">
           <button
             className="bg-red-500 text-white size-5 rounded-md text-sm"
-            onClick={handleClose}
+            onClick={onClose}
           >
             X
           </button>
         </div>
 
         <div className="flex flex-col">
-          <p>{text}</p>
+          <p>{message}</p>
         </div>
-        <div>{content}</div>
+        <div>{children}</div>
       </motion.div>
     </div>
   ) : null;

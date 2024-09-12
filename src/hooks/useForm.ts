@@ -1,23 +1,23 @@
 import { useState } from "react";
 
 const useForm = <T extends Record<string, string | number>>(
-  defaultValues: T
+  initialValues: T
 ) => {
-  const [formValues, setFormValues] = useState<T>(defaultValues);
+  const [values, setValue] = useState<T>(initialValues);
 
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormValues({
-      ...formValues,
+    setValue({
+      ...values,
       [name]: value,
     });
   };
 
-  const resetFormValues = () => {
-    setFormValues(defaultValues);
+  const resetForm = () => {
+    setValue(initialValues);
   };
 
-  return [formValues, onInputChange, resetFormValues] as const;
+  return [values, handleChange, resetForm] as const;
 };
 
 export default useForm;
