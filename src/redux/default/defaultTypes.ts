@@ -1,0 +1,2 @@
+export const SET_MODULE_NAME = 'SET_MODULE_NAME';
+export const RESET_MODULE_NAME = 'RESET_MODULE_NAME';
