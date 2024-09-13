@@ -24,14 +24,32 @@ export const ModalDeleteWord = ({
       return;
     }
 
- 
-    if (!words[wordToDelete]) {
+    const normalizeWord = (word: string) =>
+      word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const normalizedWord = normalizeWord(wordToDelete);
+
+    const wordData = Object.values(words).find(
+      (word: any) =>
+        normalizeWord(word.es) === normalizedWord ||
+        normalizeWord(word.en) === normalizedWord ||
+        normalizeWord(word.pt) === normalizedWord
+    );
+
+    if (!wordData) {
       setErrorMessage("La palabra no existe en el diccionario.");
     } else {
-      dispatch(deleteWord(wordToDelete));
-      setWordToDelete("");
-      setErrorMessage("");
-      onClose();
+      const key = Object.keys(words).find(
+        (k) =>
+          normalizeWord(words[k].es) === normalizedWord ||
+          normalizeWord(words[k].en) === normalizedWord ||
+          normalizeWord(words[k].pt) === normalizedWord
+      );
+      if (key) {
+        dispatch(deleteWord(key));
+        setWordToDelete("");
+        setErrorMessage("");
+        onClose();
+      }
     }
   };
 
